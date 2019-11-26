@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerCarrierScript : MonoBehaviour
 {
-    public GameObject carrier;
-    public int maxSpeed;
-    public int speed;
-    public int rotateSpeed = 10;
+    [SerializeField] GameObject carrier;
+    [SerializeField] int maxSpeed;
+    [SerializeField] int speed;
+    [SerializeField] int rotateSpeed = 10;
+    [SerializeField] GameObject[] planes;
+    bool planesLaunched = false;
 
 
     Rigidbody m_Rigidbody; // переименовать
@@ -22,29 +24,10 @@ public class PlayerCarrierScript : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
 
         m_Rigidbody.velocity = transform.up * speed/500;
-
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            IncreaseSpeed();            
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            DecreaseSpeed();
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            RotateRight();            
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            RotateLeft();
-        }
+      
     }
 
 
@@ -75,8 +58,20 @@ public class PlayerCarrierScript : MonoBehaviour
     }
 
     public void LaunchPlanes() {
+        if (!planesLaunched)
+        {
+            for (int i = 0; i < planes.Length; i++)
+            {
+                Debug.Log("Plane Launched");
+                PlaneScript planeScript = planes[i].GetComponent<PlaneScript>();
+                planeScript.Fly();
+
+            }
+            planesLaunched = true;
+        }
 
     }
 
+    
     
 }
