@@ -9,15 +9,16 @@ public class PlayerCarrierScript : MonoBehaviour
     [SerializeField] int speed;
     [SerializeField] int rotateSpeed = 10;
     [SerializeField] GameObject[] planes;
-    bool planesLaunched = false;
+    [SerializeField] int flyRadius;
+     bool planesLaunched = false;
 
 
-    Rigidbody m_Rigidbody; // переименовать
+    Rigidbody carrierRigidbody; // переименовать
 
 
     // Start is called before the first frame update
     void Start() {
-        m_Rigidbody = GetComponent<Rigidbody>();
+        carrierRigidbody = GetComponent<Rigidbody>();
         maxSpeed = 500;
         speed = 0;
     }
@@ -26,7 +27,7 @@ public class PlayerCarrierScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate() {
 
-        m_Rigidbody.velocity = transform.up * speed/500;
+        carrierRigidbody.velocity = transform.up * speed/500;
       
     }
 
@@ -63,8 +64,8 @@ public class PlayerCarrierScript : MonoBehaviour
             for (int i = 0; i < planes.Length; i++)
             {
                 Debug.Log("Plane Launched");
-                PlaneScript planeScript = planes[i].GetComponent<PlaneScript>();
-                planeScript.Fly();
+                PlanePlace planePlaceScript = planes[i].GetComponent<PlanePlace>();
+                planePlaceScript.Launch();
 
             }
             planesLaunched = true;

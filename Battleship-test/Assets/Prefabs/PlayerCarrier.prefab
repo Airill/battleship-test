@@ -113,7 +113,7 @@ MonoBehaviour:
   maxSpeed: 0
   speed: 0
   rotateSpeed: 20
-  Planes: []
+  planes: []
 --- !u!1001 &1292628090687490226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -124,7 +124,7 @@ PrefabInstance:
     - target: {fileID: 3159795240081150480, guid: 8325df61fa176ba4d9d563eb2081fc0e,
         type: 3}
       propertyPath: m_Name
-      value: Plane
+      value: PlanePlace1
       objectReference: {fileID: 0}
     - target: {fileID: 7354608685898640892, guid: 8325df61fa176ba4d9d563eb2081fc0e,
         type: 3}
@@ -181,7 +181,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6438369428177337768, guid: 8325df61fa176ba4d9d563eb2081fc0e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8325df61fa176ba4d9d563eb2081fc0e, type: 3}
 --- !u!4 &8638053363140994382 stripped
 Transform:
