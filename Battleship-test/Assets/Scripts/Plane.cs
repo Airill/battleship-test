@@ -27,6 +27,7 @@ public class Plane : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        carrier = GameObject.Find("PlayerCarrier");
         planeRigidbody = GetComponent<Rigidbody>();
         carrierRigidbody = carrier.GetComponent<Rigidbody>();
         minSpeed = 500;
