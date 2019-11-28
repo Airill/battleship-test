@@ -113,3 +113,5 @@ MonoBehaviour:
   maxSpeed: 0
   angularVelocity: 0
   acceleration: 0
+  sqrRadius: 0
+  carrier: {fileID: 5617464991021808444, guid: ff79f63cf9e49594fac8b0c6f16891f5, type: 3}

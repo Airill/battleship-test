@@ -26,6 +26,7 @@ public class PlanePlace : MonoBehaviour
       //  launchAngle = new Vector3 (0, 0, transform.rotation.z);
         GameObject plane = Instantiate(planePrefab, launchPlace, Quaternion.identity) as GameObject;
         plane.transform.rotation = transform.rotation;
+        //plane.carrier
         Debug.Log("I fly!");
     }
 }

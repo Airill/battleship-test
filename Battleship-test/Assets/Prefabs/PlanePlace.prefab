@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dbbbc0e943588248b2226f016bde128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plane: {fileID: 0}
+  planePrefab: {fileID: 3159795240081150480, guid: b2dd97cf62c43ec45a4337f208a63937,
+    type: 3}
 --- !u!23 &762335897053930802
 MeshRenderer:
   m_ObjectHideFlags: 0
