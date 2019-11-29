@@ -9,9 +9,9 @@ public class Plane : MonoBehaviour
    [SerializeField] int speed;
    [SerializeField] int minSpeed;
    [SerializeField] int maxSpeed;
-   [SerializeField] int angularVelocity;
+   [SerializeField] float angularVelocity;
    [SerializeField] int acceleration;
-   [SerializeField] float sqrRadius;
+   [SerializeField] float flyRadius;
     int rotateSpeed;
     Rigidbody planeRigidbody;
     Transform planeTransform;
@@ -23,20 +23,23 @@ public class Plane : MonoBehaviour
 
     Vector3 toCarrier;
 
-
+    float angle = 0f;
     // Start is called before the first frame update
     void Start()
     {
         carrier = GameObject.Find("PlayerCarrier");
         planeRigidbody = GetComponent<Rigidbody>();
         carrierRigidbody = carrier.GetComponent<Rigidbody>();
-        minSpeed = 500;
-        takeoff();
-        sqrRadius = 4f;
-        rotateSpeed = 100;
+        minSpeed = 400;
+        flyRadius = 4f;
+        rotateSpeed = 20;
+        angularVelocity = 1f;
 
         carrierTransform = carrier.GetComponent<Transform>();
 
+        Vector3 axis;
+        carrierTransform.rotation.ToAngleAxis(out angle, out axis);
+        takeoff();
     }
 
     private void takeoff() {
@@ -51,22 +54,27 @@ public class Plane : MonoBehaviour
         // toCarrier = carrierTransform.position - transform.position;
         
         float dist = Vector3.Distance(carrierTransform.position, transform.position);
-        Debug.Log(carrierTransform.position);
-        Debug.Log(transform.position);
-        Debug.Log(dist);
-        if (dist > sqrRadius)
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        if (!patrol)
+        {
+            
+            angle += 0.4f;
+
+        }
+        
+
+
+        if (dist > flyRadius + 0.05f)
         {
             patrol = true;
-               // planeRigidbody.AddForce(toCarrier);
-               transform.Rotate(new Vector3(0, 0, 1) * Time.deltaTime * rotateSpeed, Space.World);
-       
+            angle += angularVelocity;
+            //transform.Rotate(new Vector3(0, 0, 1) * Time.deltaTime * rotateSpeed, Space.World);
+
         }
-        if ((patrol) && (dist <= sqrRadius))
+        if ((patrol) && (dist <= flyRadius - 0.05f))
         {
-                transform.Rotate(new Vector3(0, 0, -1) * Time.deltaTime * rotateSpeed, Space.World);
-                 // var velocity = planeRigidbody.velocity;
-                //  Vector3.OrthoNormalize(ref toCarrier, ref velocity);
-                // planeRigidbody.AddForce(velocity);
+            // transform.Rotate(new Vector3(0, 0, -1) * Time.deltaTime * rotateSpeed, Space.World);
+            angle -= angularVelocity;
         }
        planeRigidbody.velocity = transform.up * minSpeed / 500;
         
