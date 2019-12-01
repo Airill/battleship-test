@@ -27,7 +27,7 @@ public class PlayerCarrierScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate() {
 
-        carrierRigidbody.velocity = transform.up * speed/500;
+        carrierRigidbody.velocity = transform.forward * speed/500;
       
     }
 
@@ -50,12 +50,12 @@ public class PlayerCarrierScript : MonoBehaviour
     public void RotateLeft() {
 
         //Rotate the sprite about the Y axis in the negative direction
-        transform.Rotate(new Vector3(0, 0, 1) * Time.deltaTime * rotateSpeed, Space.World);
+        transform.Rotate(new Vector3(0, -1, 0) * Time.deltaTime * rotateSpeed, Space.World);
     }
 
     public void RotateRight() {
 
-        transform.Rotate(new Vector3(0, 0, -1) * Time.deltaTime * rotateSpeed, Space.World);
+        transform.Rotate(new Vector3(0, 1, 0) * Time.deltaTime * rotateSpeed, Space.World);
     }
 
     public void LaunchPlanes() {
@@ -68,7 +68,7 @@ public class PlayerCarrierScript : MonoBehaviour
                 planePlaceScript.Launch();
 
             }
-            planesLaunched = true;
+           planesLaunched = true;
         }
 
     }

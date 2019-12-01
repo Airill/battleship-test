@@ -6,77 +6,117 @@ using UnityEngine;
 public class Plane : MonoBehaviour
 {
 
-   [SerializeField] int speed;
-   [SerializeField] int minSpeed;
-   [SerializeField] int maxSpeed;
-   [SerializeField] float angularVelocity;
-   [SerializeField] int acceleration;
-   [SerializeField] float flyRadius;
-    int rotateSpeed;
+          int speed;
+   public int minSpeed;
+   public int maxSpeed;
+   public float angularVelocity;
+   public int acceleration;
+   public float flyRadius;
+   public float lifeTime;
+   public int rotateSpeed;
+          bool timeToFly = false;
+          float takeOffTime;
+          float dist;
+
     Rigidbody planeRigidbody;
     Transform planeTransform;
     Transform carrierTransform;
 
-   [SerializeField] GameObject carrier;
+    Vector3 dir;
+
+    GameObject carrier;
     Rigidbody carrierRigidbody;
     bool patrol = false;
 
     Vector3 toCarrier;
 
     float angle = 0f;
+    Vector3 axis;
+
+    float dR = 0.5f;
+
     // Start is called before the first frame update
     void Start()
     {
         carrier = GameObject.Find("PlayerCarrier");
         planeRigidbody = GetComponent<Rigidbody>();
         carrierRigidbody = carrier.GetComponent<Rigidbody>();
-        minSpeed = 400;
-        flyRadius = 4f;
-        rotateSpeed = 20;
-        angularVelocity = 1f;
+
+
+
+
+        takeOffTime = Time.time;
+        
 
         carrierTransform = carrier.GetComponent<Transform>();
+        
 
-        Vector3 axis;
         carrierTransform.rotation.ToAngleAxis(out angle, out axis);
-        takeoff();
+        TakeOff();
     }
 
-    private void takeoff() {
+    void TakeOff() {
         planeRigidbody.velocity = transform.up * minSpeed / 500;
+    }
+
+    void Landing() {
+        toCarrier = carrierTransform.position - transform.position;
+        transform.LookAt(toCarrier);
     }
 
     // Update is called once per frame
     void Update()
     {
+         dist = Vector3.Distance(transform.position, carrierTransform.position);
 
-        //  Debug.Log(toCarrier.sqrMagnitude);
-        // toCarrier = carrierTransform.position - transform.position;
-        
-        float dist = Vector3.Distance(carrierTransform.position, transform.position);
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        if (!patrol)
+        if (Time.time >= takeOffTime + lifeTime)
         {
+            timeToFly = true;
+        }
+
+        if (!timeToFly) {
             
-            angle += 0.4f;
-
-        }
+            if (!patrol)
+            {
+                transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
+                angle += 0.5f;
+            }
         
-
-
-        if (dist > flyRadius + 0.05f)
-        {
-            patrol = true;
+            if ((patrol) && (dist > flyRadius + dR))
+            {
+            transform.rotation.ToAngleAxis(out angle, out axis);
             angle += angularVelocity;
-            //transform.Rotate(new Vector3(0, 0, 1) * Time.deltaTime * rotateSpeed, Space.World);
+            transform.Rotate(new Vector3(0, 1, 0) * Time.deltaTime * rotateSpeed, Space.World);
 
-        }
-        if ((patrol) && (dist <= flyRadius - 0.05f))
-        {
-            // transform.Rotate(new Vector3(0, 0, -1) * Time.deltaTime * rotateSpeed, Space.World);
+            }
+            if ((patrol) && (dist <= flyRadius - dR))
+            {
+            transform.rotation.ToAngleAxis(out angle, out axis);
             angle -= angularVelocity;
+            transform.Rotate(new Vector3(0, -1, 0) * Time.deltaTime * rotateSpeed, Space.World);
+
+            }
+            if ((dist < flyRadius + dR) && (dist > flyRadius - dR))
+            {
+
+                toCarrier = carrierTransform.position - transform.position;
+                dir = Vector3.Cross(new Vector3(transform.position.x, -1, transform.position.z), toCarrier);
+
+                transform.LookAt(new Vector3(dir.x, 0, dir.z) + transform.position);
+
+                if (!patrol)
+                {
+                    patrol = true;
+                    Debug.Log("patrol = true");
+                }
+            }
         }
-       planeRigidbody.velocity = transform.up * minSpeed / 500;
-        
+        else
+        {
+            Landing();
+        }
+
+
+       planeRigidbody.velocity = transform.forward * minSpeed / 500;
     }
 }
