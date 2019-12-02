@@ -14,7 +14,7 @@ public class Plane : MonoBehaviour
    public float flyRadius;
    public float lifeTime;
    public int rotateSpeed;
-          bool timeToFly = false;
+          bool timeToLand = false;
           float takeOffTime;
           float dist;
 
@@ -62,6 +62,11 @@ public class Plane : MonoBehaviour
     void Landing() {
         toCarrier = carrierTransform.position - transform.position;
         transform.LookAt(toCarrier);
+        Debug.Log(toCarrier);
+        if (dist < carrier.transform.localScale.x)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -71,10 +76,10 @@ public class Plane : MonoBehaviour
 
         if (Time.time >= takeOffTime + lifeTime)
         {
-            timeToFly = true;
+            timeToLand = true;
         }
 
-        if (!timeToFly) {
+        if (!timeToLand) {
             
             if (!patrol)
             {

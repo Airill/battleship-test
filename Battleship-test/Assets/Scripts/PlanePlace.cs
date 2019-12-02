@@ -34,9 +34,9 @@ public class PlanePlace : MonoBehaviour
     public void Launch() {
         launchPlace = transform.position;
 
-        GameObject plane = Instantiate(planePrefab, launchPlace, Quaternion.identity) as GameObject;
+        GameObject plane = Instantiate(planePrefab, launchPlace, Quaternion.identity);
         plane.transform.rotation = transform.rotation;
-        planeScript = GetComponent<Plane>();
+        planeScript = plane.GetComponent<Plane>();
 
         planeScript.minSpeed = planeMinSpeed;
         planeScript.maxSpeed = planeMaxSpeed;

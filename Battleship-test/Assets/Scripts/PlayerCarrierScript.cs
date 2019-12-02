@@ -10,6 +10,7 @@ public class PlayerCarrierScript : MonoBehaviour
     [SerializeField] int rotateSpeed = 10;
     [SerializeField] GameObject[] planes;
     [SerializeField] int flyRadius;
+    [SerializeField] int planesPerPlace = 5;
      bool planesLaunched = false;
 
 
@@ -59,20 +60,28 @@ public class PlayerCarrierScript : MonoBehaviour
     }
 
     public void LaunchPlanes() {
+        StartCoroutine(LaunchPlane());
+    }
+
+   public IEnumerator LaunchPlane() {
         if (!planesLaunched)
         {
+            planesLaunched = true;
             for (int i = 0; i < planes.Length; i++)
             {
                 Debug.Log("Plane Launched");
                 PlanePlace planePlaceScript = planes[i].GetComponent<PlanePlace>();
-                planePlaceScript.Launch();
+                for (int j =1; j <= planesPerPlace; j++)
+                {
+                    planePlaceScript.Launch();
+                    yield return new WaitForSeconds(1);
+                }
+                
 
             }
-           planesLaunched = true;
+
         }
-
     }
-
     
     
 }

@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &22864271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,6 +424,7 @@ MonoBehaviour:
   planes:
   - {fileID: 8636973642450069348}
   flyRadius: 0
+  planesPerPlace: 1
 --- !u!54 &951486204
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -701,7 +702,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &2040011950
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -790,13 +791,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planePrefab: {fileID: 3159795240081150480, guid: b2dd97cf62c43ec45a4337f208a63937,
     type: 3}
-  planeMinSpeed: 0
+  planeMinSpeed: 580
   planeMaxSpeed: 0
   planeAngularVelocity: 0
   planeRotateSpeed: 20
   planeAcceleration: 0
-  planeFlyRadius: 0
-  planeLifeTime: 0
+  planeFlyRadius: 4
+  planeLifeTime: 30
 --- !u!4 &4185455258670569608
 Transform:
   m_ObjectHideFlags: 0
