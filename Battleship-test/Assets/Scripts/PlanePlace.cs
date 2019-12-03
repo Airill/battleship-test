@@ -11,13 +11,14 @@ public class PlanePlace : MonoBehaviour
     Plane planeScript;
 
 
-    public int planeMinSpeed = 500;
-    public int planeMaxSpeed = 1000;
-    public float planeAngularVelocity = 1f; // оставить одно
-    public int planeRotateSpeed = 20; //оставить одно
-    public int planeAcceleration = 50;
-    public float planeFlyRadius = 4f;
-    public float planeLifeTime = 30f;
+    [SerializeField] int planeMinSpeed = 600;
+    [SerializeField] int planeMaxSpeed = 1000;
+    [SerializeField] float planeAngularVelocity = 1f; // оставить одно
+    [SerializeField] int planeRotateSpeed = 20; //оставить одно
+    [SerializeField] int planeAcceleration = 25;
+    [SerializeField] float planeFlyRadius = 4f;
+    [SerializeField] float planeLifeTime = 30f;
+    [SerializeField] float planeSpaceBetweenPlanes = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +46,7 @@ public class PlanePlace : MonoBehaviour
         planeScript.acceleration = planeAcceleration;
         planeScript.flyRadius = planeFlyRadius;
         planeScript.lifeTime = planeLifeTime;
+        planeScript.spaceBetweenPlanes = planeSpaceBetweenPlanes;
 
         Debug.Log("I launched a plane!");
     }
